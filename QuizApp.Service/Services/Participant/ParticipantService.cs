@@ -21,7 +21,7 @@ namespace QuizApp.Service.Services
             try
             {
                 var result = await _unitOfWork.ParticipantRepository.GetAll();
-                var participantList = _mapper.Map<IList<QuestionDto>>(result);
+                var participantList = _mapper.Map<IList<ParticipantDto>>(result);
 
                 return new ApiSuccessResult<IList<ParticipantDto>>(participantList);
             }
