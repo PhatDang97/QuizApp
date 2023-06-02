@@ -1,0 +1,23 @@
+﻿using AutoMapper;
+using QuizApp.Common.Paging;
+using QuizApp.Core.Entities;
+using QuizApp.Service.Services.DTOs;
+
+namespace QuizApp.Service.Mappings
+{
+    public class AutoMapperProfile : Profile
+    {
+        public AutoMapperProfile()
+        {
+            CreateMap<TopicDto, Topic>().ReverseMap();
+
+            CreateMap<QuestionGroupDto, QuestionGroup>().ReverseMap();
+            CreateMap<PagedResult<QuestionGroupDto>, PagedResult<QuestionGroup>>().ReverseMap();
+
+            CreateMap<QuestionDto, Question>().ReverseMap();
+            CreateMap<ParticipantDto, Participant>().ReverseMap();
+            CreateMap<ParticipantResultDto, ParticipantResult>().ReverseMap();
+
+        }
+    }
+}
