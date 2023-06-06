@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Serialization;
 using QuizApp.Service.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,19 +8,26 @@ var configuration = builder.Configuration;
 builder.Services.AddDbContexts(configuration);
 builder.Services.AddCoreServices(configuration);
 
+builder.Services.AddCors();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddControllers().AddNewtonsoftJson(options =>
-//{
-//    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-//    options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
-//});
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
+
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+    options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+    //options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+});
 
 var app = builder.Build();
 
+app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
