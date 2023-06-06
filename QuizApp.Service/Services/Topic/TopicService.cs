@@ -14,7 +14,7 @@ namespace QuizApp.Service.Services
         {
             try
             {
-                var result = await _unitOfWork.QuestionGroupRepository.GetAll();
+                var result = await _unitOfWork.TopicRepository.GetAll();
                 var topicList = _mapper.Map<IList<TopicDto>>(result);
 
                 return new ApiSuccessResult<IList<TopicDto>>(topicList);
