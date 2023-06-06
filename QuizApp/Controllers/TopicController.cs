@@ -14,7 +14,7 @@ namespace QuizApp.Controllers
         }
 
         [HttpGet]
-        [Route("GetAll")]
+        [Route("getall")]
         public async Task<IActionResult> GetAll()
         {
             var result = await _topicService.GetAll();

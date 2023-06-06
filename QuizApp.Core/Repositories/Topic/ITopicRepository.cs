@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using QuizApp.Core.Entities;
 
 namespace QuizApp.Core.Repositories
 {
-    public interface ITopicRepository
+    public interface ITopicRepository : IBaseRepository<Topic>
     {
     }
 }

@@ -10,6 +10,12 @@ namespace QuizApp.Service.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
+        public TopicService(IUnitOfWork unitOfWork, IMapper mapper)
+        {
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
+        }
+
         public async Task<ApiResult<IList<TopicDto>>> GetAll()
         {
             try
