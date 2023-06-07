@@ -10,8 +10,10 @@ namespace QuizApp.Service.Mappings
         public AutoMapperProfile()
         {
             CreateMap<TopicDto, Topic>().ReverseMap();
+            CreateMap<TopicCreateDto, Topic>().ReverseMap();
 
             CreateMap<QuestionGroupDto, QuestionGroup>().ReverseMap();
+            CreateMap<QuestionGroupCreateDto, QuestionGroup>().ReverseMap();
             CreateMap<PagedResult<QuestionGroupDto>, PagedResult<QuestionGroup>>().ReverseMap();
 
             CreateMap<QuestionDto, Question>().ReverseMap();

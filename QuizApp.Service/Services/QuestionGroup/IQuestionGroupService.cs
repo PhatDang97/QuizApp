@@ -8,5 +8,7 @@ namespace QuizApp.Service.Services
     {
         Task<ApiResult<PagedResult<QuestionGroupDto>>> GetQuestionGroupsPaging(GetQuestionGroupPagingRequest request);
         Task<ApiResult<IList<QuestionGroupDto>>> GetAll();
+        Task<ApiResult<bool>> Create(QuestionGroupCreateDto dto);
+        Task<ApiResult<bool>> DeleteById(Guid id);
     }
 }

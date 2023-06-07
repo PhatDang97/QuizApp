@@ -32,5 +32,10 @@ namespace QuizApp.Core.Repositories
             };
             return result;
         }
+
+        public async Task<QuestionGroup> GetByName(string name)
+        {
+            return await _entities.FirstOrDefaultAsync(x => x.Name == name);
+        }
     }
 }

@@ -6,5 +6,8 @@ namespace QuizApp.Service.Services
     public interface ITopicService
     {
         Task<ApiResult<IList<TopicDto>>> GetAll();
+        Task<ApiResult<IList<TopicDto>>> GetAllIncludeGroup();
+        Task<ApiResult<bool>> Create(TopicCreateDto dto);
+        Task<ApiResult<bool>> DeleteById(Guid id);
     }
 }

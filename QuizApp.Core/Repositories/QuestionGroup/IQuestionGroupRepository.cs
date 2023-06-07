@@ -6,6 +6,6 @@ namespace QuizApp.Core.Repositories
     public interface IQuestionGroupRepository : IBaseRepository<QuestionGroup>
     {
         Task<PagedResult<QuestionGroup>> GetQuestionGroupsPaging(GetQuestionGroupPagingRequest request);
-
+        Task<QuestionGroup> GetByName(string name);
     }
 }
