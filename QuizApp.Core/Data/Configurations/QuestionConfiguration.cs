@@ -44,7 +44,7 @@ namespace QuizApp.Core.Data.Configurations
             builder.HasOne(x => x.QuestionGroup)
                 .WithMany(x => x.Questions)
                 .HasForeignKey(x => x.QuestionGroupId)
-                .HasConstraintName("FK_QuestionGroup_Topic")
+                .HasConstraintName("FK_QuestionGroup_Questions")
                 .OnDelete(DeleteBehavior.ClientSetNull);
         }
     }

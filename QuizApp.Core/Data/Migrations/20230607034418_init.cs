@@ -108,7 +108,7 @@ namespace QuizApp.Core.Data.Migrations
                 {
                     table.PrimaryKey("PK_Question", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_QuestionGroup_Topic",
+                        name: "FK_QuestionGroup_Questions",
                         column: x => x.QuestionGroupId,
                         principalTable: "QuestionGroup",
                         principalColumn: "Id");
@@ -117,7 +117,12 @@ namespace QuizApp.Core.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Topic",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { new Guid("63f6605c-b931-4bd5-99eb-2ea550783df1"), "Popular" });
+                values: new object[] { new Guid("92941242-7e5b-4323-af1a-54f03e2a3c63"), "Popular" });
+
+            migrationBuilder.InsertData(
+                table: "QuestionGroup",
+                columns: new[] { "Id", "Name", "TopicId" },
+                values: new object[] { new Guid("37b8b1e7-12de-4303-a91d-89b3543ad139"), "Graphic Design", new Guid("92941242-7e5b-4323-af1a-54f03e2a3c63") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ParticipantResult_ParticipantId",

@@ -17,6 +17,8 @@ namespace QuizApp.Service.Mappings
             CreateMap<PagedResult<QuestionGroupDto>, PagedResult<QuestionGroup>>().ReverseMap();
 
             CreateMap<QuestionDto, Question>().ReverseMap();
+            CreateMap<QuestionCreateDto, Question>().ReverseMap();
+
             CreateMap<ParticipantDto, Participant>().ReverseMap();
             CreateMap<ParticipantResultDto, ParticipantResult>().ReverseMap();
 

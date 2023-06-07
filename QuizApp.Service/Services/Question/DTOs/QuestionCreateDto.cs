@@ -1,8 +1,7 @@
 ﻿namespace QuizApp.Service.Services.DTOs
 {
-    public class QuestionDto
+    public class QuestionCreateDto
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public String Image { get; set; }
         public String Option1 { get; set; }
@@ -14,11 +13,5 @@
         public int? Answer { get; set; }
 
         public Guid QuestionGroupId { get; set; }
-        public virtual QuestionGroupDto QuestionGroup { get; set; }
-
-        public List<string> AnswerList
-        {
-            get { return new List<string>() { Option1, Option2, Option3, Option4, Option5, Option6 }; ; }
-        }
     }
 }

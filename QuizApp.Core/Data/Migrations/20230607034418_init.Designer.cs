@@ -12,8 +12,8 @@ using QuizApp.Core.Data;
 namespace QuizApp.Core.Data.Migrations
 {
     [DbContext(typeof(QuizAppDBContext))]
-    [Migration("20230531134416_InsertData")]
-    partial class InsertData
+    [Migration("20230607034418_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -162,9 +162,9 @@ namespace QuizApp.Core.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ac4f2827-df64-4867-aeac-603c004a87e9"),
+                            Id = new Guid("37b8b1e7-12de-4303-a91d-89b3543ad139"),
                             Name = "Graphic Design",
-                            TopicId = new Guid("73dc1650-190f-4f7c-85dd-0d081f46500d")
+                            TopicId = new Guid("92941242-7e5b-4323-af1a-54f03e2a3c63")
                         });
                 });
 
@@ -186,7 +186,7 @@ namespace QuizApp.Core.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("73dc1650-190f-4f7c-85dd-0d081f46500d"),
+                            Id = new Guid("92941242-7e5b-4323-af1a-54f03e2a3c63"),
                             Name = "Popular"
                         });
                 });
@@ -220,7 +220,7 @@ namespace QuizApp.Core.Data.Migrations
                         .WithMany("Questions")
                         .HasForeignKey("QuestionGroupId")
                         .IsRequired()
-                        .HasConstraintName("FK_QuestionGroup_Topic");
+                        .HasConstraintName("FK_QuestionGroup_Questions");
 
                     b.Navigation("QuestionGroup");
                 });
