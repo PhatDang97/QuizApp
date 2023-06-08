@@ -1,4 +1,5 @@
-﻿using QuizApp.Core.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using QuizApp.Core.Data;
 using QuizApp.Core.Entities;
 
 namespace QuizApp.Core.Repositories
@@ -7,6 +8,11 @@ namespace QuizApp.Core.Repositories
     {
         public ParticipantRepository(QuizAppDBContext context) : base(context)
         {
+        }
+
+        public async Task<Participant> GetByEmail(string email)
+        {
+            return await _entities.FirstOrDefaultAsync(x => x.Email == email);
         }
     }
 }
