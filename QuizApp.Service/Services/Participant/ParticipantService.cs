@@ -32,28 +32,30 @@ namespace QuizApp.Service.Services
             }
         }
 
-        public async Task<ApiResult<bool>> Create(ParticipantCreateDto dto)
+        public async Task<ApiResult<ParticipantDto>> Create(ParticipantCreateDto dto)
         {
             try
             {
-                var participantOld = await _unitOfWork.ParticipantRepository.GetByEmail(dto.Email);
+                var participantOld = await _unitOfWork.ParticipantRepository.GetParticipant(dto.Email, dto.UserName);
                 if (participantOld != null)
                 {
-                    return new ApiErrorResult<bool>($"Participant [{dto.Email}] is existing!");
+                    var dataResult = _mapper.Map<ParticipantDto>(participantOld);
+                    return new ApiSuccessResult<ParticipantDto>(dataResult);
                 }
                 var entity = _mapper.Map<Participant>(dto);
                 await _unitOfWork.ParticipantRepository.Add(entity);
                 var result = await _unitOfWork.SaveChangesAsync();
+                var data = _mapper.Map<ParticipantDto>(entity);
                 if (result == true)
                 {
-                    return new ApiSuccessResult<bool>($"Create a Participant [{dto.Email}] successfully!");
+                    return new ApiSuccessResult<ParticipantDto>(data);
                 }
             }
             catch (Exception ex)
             {
-                return new ApiErrorResult<bool>($"Error: {ex.Message}");
+                return new ApiErrorResult<ParticipantDto>($"Error: {ex.Message}");
             }
-            return new ApiErrorResult<bool>($"Create a Participant [{dto.Email}] failed!");
+            return new ApiErrorResult<ParticipantDto>($"Create a Participant [{dto.Email}] failed!");
         }
 
         public async Task<ApiResult<bool>> DeleteById(Guid id)

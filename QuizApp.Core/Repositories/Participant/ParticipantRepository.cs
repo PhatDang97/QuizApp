@@ -14,5 +14,10 @@ namespace QuizApp.Core.Repositories
         {
             return await _entities.FirstOrDefaultAsync(x => x.Email == email);
         }
+
+        public async Task<Participant> GetParticipant(string email, string userName)
+        {
+            return await _entities.FirstOrDefaultAsync(x => x.Email == email && x.UserName == userName);
+        }
     }
 }
