@@ -45,9 +45,9 @@ namespace QuizApp.Service.Services
                 var entity = _mapper.Map<Participant>(dto);
                 await _unitOfWork.ParticipantRepository.Add(entity);
                 var result = await _unitOfWork.SaveChangesAsync();
-                var data = _mapper.Map<ParticipantDto>(entity);
                 if (result == true)
                 {
+                    var data = _mapper.Map<ParticipantDto>(entity);
                     return new ApiSuccessResult<ParticipantDto>(data);
                 }
             }

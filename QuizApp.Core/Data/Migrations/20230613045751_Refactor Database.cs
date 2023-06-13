@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace QuizApp.Core.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class RefactorDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -44,7 +44,8 @@ namespace QuizApp.Core.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    TopicId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    TopicId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TotalQuestion = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -117,12 +118,12 @@ namespace QuizApp.Core.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Topic",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { new Guid("92941242-7e5b-4323-af1a-54f03e2a3c63"), "Popular" });
+                values: new object[] { new Guid("72c2484b-44b8-4853-a903-d5476ffc69c6"), "Popular" });
 
             migrationBuilder.InsertData(
                 table: "QuestionGroup",
-                columns: new[] { "Id", "Name", "TopicId" },
-                values: new object[] { new Guid("37b8b1e7-12de-4303-a91d-89b3543ad139"), "Graphic Design", new Guid("92941242-7e5b-4323-af1a-54f03e2a3c63") });
+                columns: new[] { "Id", "Name", "TopicId", "TotalQuestion" },
+                values: new object[] { new Guid("db12e9b3-a68f-4b39-99b1-a6892dbb0a5e"), "Graphic Design", new Guid("72c2484b-44b8-4853-a903-d5476ffc69c6"), 0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ParticipantResult_ParticipantId",

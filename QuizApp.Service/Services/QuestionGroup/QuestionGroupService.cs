@@ -47,28 +47,29 @@ namespace QuizApp.Service.Services
             }
         }
 
-        public async Task<ApiResult<bool>> Create(QuestionGroupCreateDto dto)
+        public async Task<ApiResult<QuestionGroupDto>> Create(QuestionGroupCreateDto dto)
         {
             try
             {
                 var questionGroupOld = await _unitOfWork.QuestionGroupRepository.GetByName(dto.Name);
                 if (questionGroupOld != null)
                 {
-                    return new ApiErrorResult<bool>($"QuesionGroup [{dto.Name}] is existing!");
+                    return new ApiErrorResult<QuestionGroupDto>($"QuesionGroup [{dto.Name}] is existing!");
                 }
                 var entity = _mapper.Map<QuestionGroup>(dto);
                 await _unitOfWork.QuestionGroupRepository.Add(entity);
                 var result = await _unitOfWork.SaveChangesAsync();
                 if (result == true)
                 {
-                    return new ApiSuccessResult<bool>($"Create a QuesionGroup [{dto.Name}] successfully!");
+                    var data = _mapper.Map<QuestionGroupDto>(entity);
+                    return new ApiSuccessResult<QuestionGroupDto>(data);
                 }
             }
             catch (Exception ex)
             {
-                return new ApiErrorResult<bool>($"Error: {ex.Message}");
+                return new ApiErrorResult<QuestionGroupDto>($"Error: {ex.Message}");
             }
-            return new ApiErrorResult<bool>($"Create a QuesionGroup [{dto.Name}] failed!");
+            return new ApiErrorResult<QuestionGroupDto>($"Create a QuesionGroup [{dto.Name}] failed!");
         }
 
         public async Task<ApiResult<bool>> DeleteById(Guid id)
@@ -95,6 +96,21 @@ namespace QuizApp.Service.Services
                 return new ApiErrorResult<bool>(ex.Message);
             }
             return new ApiErrorResult<bool>($"Delete QuesionGroup [{questionGroup.Name}] failed!");
+        }
+
+        public async Task<ApiResult<QuestionGroupDto>> GetById(Guid id)
+        {
+            try
+            {
+                var result = await _unitOfWork.QuestionGroupRepository.GetById(id);
+                var questionGroup = _mapper.Map<QuestionGroupDto>(result);
+
+                return new ApiSuccessResult<QuestionGroupDto>(questionGroup);
+            }
+            catch (Exception ex)
+            {
+                return new ApiErrorResult<QuestionGroupDto>("Get Question Group failed:" + ex.Message);
+            }
         }
     }
 }

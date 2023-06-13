@@ -6,7 +6,7 @@ namespace QuizApp.Service.Services
     public interface IQuestionService
     {
         Task<ApiResult<IList<QuestionDto>>> GetAll();
-        Task<ApiResult<bool>> Create(QuestionCreateDto dto);
+        Task<ApiResult<QuestionDto>> Create(QuestionCreateDto dto);
         Task<ApiResult<bool>> DeleteById(Guid id);
     }
 }

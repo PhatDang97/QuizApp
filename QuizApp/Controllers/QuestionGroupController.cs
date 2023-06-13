@@ -46,5 +46,13 @@ namespace QuizApp.Controllers
             var result = await _questionGroupService.DeleteById(id);
             return Ok(result);
         }
+
+        [HttpGet]
+        [Route("Get/{id}")]
+        public async Task<IActionResult> Get(Guid id)
+        {
+            var result = await _questionGroupService.GetById(id);
+            return Ok(result);
+        }
     }
 }

@@ -47,28 +47,29 @@ namespace QuizApp.Service.Services
             }
         }
 
-        public async Task<ApiResult<bool>> Create(TopicCreateDto dto)
+        public async Task<ApiResult<TopicDto>> Create(TopicCreateDto dto)
         {
             try
             {
                 var topicOld = await _unitOfWork.TopicRepository.GetByName(dto.Name);
                 if (topicOld != null)
                 {
-                    return new ApiErrorResult<bool>($"Topic [{dto.Name}] is existing!");
+                    return new ApiErrorResult<TopicDto>($"Topic [{dto.Name}] is existing!");
                 }
                 var entity = _mapper.Map<Topic>(dto);
                 await _unitOfWork.TopicRepository.Add(entity);
                 var result = await _unitOfWork.SaveChangesAsync();
                 if (result == true)
                 {
-                    return new ApiSuccessResult<bool>($"Create a Topic [{dto.Name}] successfully!");
+                    var data = _mapper.Map<TopicDto>(entity);
+                    return new ApiSuccessResult<TopicDto>(data);
                 }
             }
             catch (Exception ex)
             {
-                return new ApiErrorResult<bool>($"Error: {ex.Message}");
+                return new ApiErrorResult<TopicDto>($"Error: {ex.Message}");
             }
-            return new ApiErrorResult<bool>($"Create a Topic [{dto.Name}] failed!");
+            return new ApiErrorResult<TopicDto>($"Create a Topic [{dto.Name}] failed!");
         }
 
         public async Task<ApiResult<bool>> DeleteById(Guid id)
