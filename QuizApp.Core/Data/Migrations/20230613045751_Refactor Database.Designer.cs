@@ -12,8 +12,8 @@ using QuizApp.Core.Data;
 namespace QuizApp.Core.Data.Migrations
 {
     [DbContext(typeof(QuizAppDBContext))]
-    [Migration("20230607034418_init")]
-    partial class init
+    [Migration("20230613045751_Refactor Database")]
+    partial class RefactorDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -153,6 +153,9 @@ namespace QuizApp.Core.Data.Migrations
                     b.Property<Guid>("TopicId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("TotalQuestion")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("TopicId");
@@ -162,9 +165,10 @@ namespace QuizApp.Core.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("37b8b1e7-12de-4303-a91d-89b3543ad139"),
+                            Id = new Guid("db12e9b3-a68f-4b39-99b1-a6892dbb0a5e"),
                             Name = "Graphic Design",
-                            TopicId = new Guid("92941242-7e5b-4323-af1a-54f03e2a3c63")
+                            TopicId = new Guid("72c2484b-44b8-4853-a903-d5476ffc69c6"),
+                            TotalQuestion = 0
                         });
                 });
 
@@ -186,7 +190,7 @@ namespace QuizApp.Core.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("92941242-7e5b-4323-af1a-54f03e2a3c63"),
+                            Id = new Guid("72c2484b-44b8-4853-a903-d5476ffc69c6"),
                             Name = "Popular"
                         });
                 });

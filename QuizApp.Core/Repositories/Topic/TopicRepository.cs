@@ -12,7 +12,7 @@ namespace QuizApp.Core.Repositories
 
         public async Task<IList<Topic>> GetAllIncludeGroup()
         {
-            return await _entities.Include(x => x.QuestionGroups).ThenInclude(x => x.Questions).OrderBy(x => x.Name).ToListAsync();
+            return await _entities.Include(x => x.QuestionGroups).OrderBy(x => x.Name).ToListAsync();
         }
 
         public async Task<Topic> GetByName(string name)
