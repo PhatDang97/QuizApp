@@ -11,5 +11,6 @@ namespace QuizApp.Service.Services
         Task<ApiResult<QuestionGroupDto>> Create(QuestionGroupCreateDto dto);
         Task<ApiResult<bool>> DeleteById(Guid id);
         Task<ApiResult<QuestionGroupDto>> GetById(Guid id);
+        Task<ApiResult<QuestionGroupDto>> GetIncludeQuestionById(Guid id);
     }
 }
