@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using QuizApp.Common.Result;
+using QuizApp.Core.Entities;
 using QuizApp.Core.Repositories;
 using QuizApp.Service.Services.DTOs;
 
@@ -13,6 +14,26 @@ namespace QuizApp.Service.Services
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+        }
+
+        public async Task<ApiResult<ParticipantResultDto>> Create(ParticipantResultCreateDto participantResult)
+        {
+            try
+            {
+                var entity = _mapper.Map<ParticipantResult>(participantResult);
+                await _unitOfWork.ParticipantResultRepository.Add(entity);
+                var result = await _unitOfWork.SaveChangesAsync();
+                if (result == true)
+                {
+                    var data = _mapper.Map<ParticipantResultDto>(entity);
+                    return new ApiSuccessResult<ParticipantResultDto>(data);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ApiErrorResult<ParticipantResultDto>($"Error: {ex.Message}");
+            }
+            return new ApiErrorResult<ParticipantResultDto>($"Create a ParticipantResult failed!");
         }
 
         public async Task<ApiResult<IList<ParticipantResultDto>>> GetAll()

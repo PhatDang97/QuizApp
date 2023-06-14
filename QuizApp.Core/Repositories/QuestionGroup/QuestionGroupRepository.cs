@@ -47,5 +47,10 @@ namespace QuizApp.Core.Repositories
                 _entities.Update(questionGroup);
             }
         }
+
+        public async Task<QuestionGroup> GetIncludeQuestionById(Guid questionGroupId)
+        {
+            return await _entities.Include(x => x.Questions).FirstOrDefaultAsync(x => x.Id == questionGroupId);
+        }
     }
 }

@@ -112,5 +112,20 @@ namespace QuizApp.Service.Services
                 return new ApiErrorResult<QuestionGroupDto>("Get Question Group failed:" + ex.Message);
             }
         }
+
+        public async Task<ApiResult<QuestionGroupDto>> GetIncludeQuestionById(Guid id)
+        {
+            try
+            {
+                var result = await _unitOfWork.QuestionGroupRepository.GetIncludeQuestionById(id);
+                var questionGroup = _mapper.Map<QuestionGroupDto>(result);
+
+                return new ApiSuccessResult<QuestionGroupDto>(questionGroup);
+            }
+            catch (Exception ex)
+            {
+                return new ApiErrorResult<QuestionGroupDto>("Get Question Group failed:" + ex.Message);
+            }
+        }
     }
 }
