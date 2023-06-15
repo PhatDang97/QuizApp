@@ -17,15 +17,6 @@ namespace QuizApp.Core.Repositories
 
         public async Task<IList<T>> GetAll()
         {
-            try
-            {
-                return await _entities.ToListAsync();
-
-            }
-            catch(Exception ex)
-            {
-
-            }
             return await _entities.ToListAsync();
         }
 
