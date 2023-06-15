@@ -58,15 +58,6 @@ namespace QuizApp.Core.Data.Migrations
                     b.Property<bool>("IsFinish")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("ParticipantId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("QuestionGroupId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("QuestionGroupId1")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int?>("Score")
                         .HasColumnType("int");
 
@@ -74,13 +65,6 @@ namespace QuizApp.Core.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ParticipantId");
-
-                    b.HasIndex("QuestionGroupId")
-                        .IsUnique();
-
-                    b.HasIndex("QuestionGroupId1");
 
                     b.ToTable("ParticipantResult");
                 });
@@ -162,11 +146,34 @@ namespace QuizApp.Core.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("db12e9b3-a68f-4b39-99b1-a6892dbb0a5e"),
+                            Id = new Guid("a033f89a-a1fd-48a2-8b9e-ba9258414f09"),
                             Name = "Graphic Design",
-                            TopicId = new Guid("72c2484b-44b8-4853-a903-d5476ffc69c6"),
+                            TopicId = new Guid("53852352-75ae-48b2-8b76-b08064c3e34f"),
                             TotalQuestion = 0
                         });
+                });
+
+            modelBuilder.Entity("QuizApp.Core.Entities.QuizResults", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ParticipantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ParticipantResultId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("QuestionGroupId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParticipantResultId")
+                        .IsUnique();
+
+                    b.ToTable("QuizResults");
                 });
 
             modelBuilder.Entity("QuizApp.Core.Entities.Topic", b =>
@@ -187,32 +194,9 @@ namespace QuizApp.Core.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("72c2484b-44b8-4853-a903-d5476ffc69c6"),
+                            Id = new Guid("53852352-75ae-48b2-8b76-b08064c3e34f"),
                             Name = "Popular"
                         });
-                });
-
-            modelBuilder.Entity("QuizApp.Core.Entities.ParticipantResult", b =>
-                {
-                    b.HasOne("QuizApp.Core.Entities.Participant", "Participant")
-                        .WithMany("ParticipantResults")
-                        .HasForeignKey("ParticipantId")
-                        .IsRequired()
-                        .HasConstraintName("FK_ParticipantResults_Participant");
-
-                    b.HasOne("QuizApp.Core.Entities.QuestionGroup", null)
-                        .WithOne("ParticipantResult")
-                        .HasForeignKey("QuizApp.Core.Entities.ParticipantResult", "QuestionGroupId")
-                        .IsRequired()
-                        .HasConstraintName("FK_ParticipantResults_QuestionGroup");
-
-                    b.HasOne("QuizApp.Core.Entities.QuestionGroup", "QuestionGroup")
-                        .WithMany()
-                        .HasForeignKey("QuestionGroupId1");
-
-                    b.Navigation("Participant");
-
-                    b.Navigation("QuestionGroup");
                 });
 
             modelBuilder.Entity("QuizApp.Core.Entities.Question", b =>
@@ -237,15 +221,25 @@ namespace QuizApp.Core.Data.Migrations
                     b.Navigation("Topic");
                 });
 
-            modelBuilder.Entity("QuizApp.Core.Entities.Participant", b =>
+            modelBuilder.Entity("QuizApp.Core.Entities.QuizResults", b =>
                 {
-                    b.Navigation("ParticipantResults");
+                    b.HasOne("QuizApp.Core.Entities.ParticipantResult", "ParticipantResult")
+                        .WithOne("Result")
+                        .HasForeignKey("QuizApp.Core.Entities.QuizResults", "ParticipantResultId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_ParticipantResult_Result");
+
+                    b.Navigation("ParticipantResult");
+                });
+
+            modelBuilder.Entity("QuizApp.Core.Entities.ParticipantResult", b =>
+                {
+                    b.Navigation("Result");
                 });
 
             modelBuilder.Entity("QuizApp.Core.Entities.QuestionGroup", b =>
                 {
-                    b.Navigation("ParticipantResult");
-
                     b.Navigation("Questions");
                 });
 

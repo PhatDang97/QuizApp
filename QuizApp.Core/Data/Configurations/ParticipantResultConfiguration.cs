@@ -15,18 +15,6 @@ namespace QuizApp.Core.Data.Configurations
 
             builder.Property(x => x.TimeTaken)
                 .IsRequired(false);
-
-            builder.HasOne(x => x.Participant)
-                .WithMany(x => x.ParticipantResults)
-                .HasForeignKey(x => x.ParticipantId)
-                .HasConstraintName("FK_ParticipantResults_Participant")
-                .OnDelete(DeleteBehavior.ClientSetNull);
-
-            builder.HasOne<QuestionGroup>()
-                .WithOne(x => x.ParticipantResult)
-                .HasForeignKey<ParticipantResult>(x => x.QuestionGroupId)
-                .HasConstraintName("FK_ParticipantResults_QuestionGroup")
-                .OnDelete(DeleteBehavior.ClientSetNull);
         }
     }
 }

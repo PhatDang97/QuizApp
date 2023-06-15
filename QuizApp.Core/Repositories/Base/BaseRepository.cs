@@ -37,14 +37,14 @@ namespace QuizApp.Core.Repositories
 
         public void Update(T entity)
         {
-            //_context.ChangeTracker.Clear();
-            //_context.Entry(entity).State = EntityState.Detached;
+            _context.ChangeTracker.Clear();
+            _context.Entry(entity).State = EntityState.Detached;
             _entities.Update(entity);
         }
 
         public async Task DeleteById(Guid id)
         {
-            //_context.ChangeTracker.Clear();
+            _context.ChangeTracker.Clear();
             T entity = await GetById(id);
             if (entity != null)
                 _entities.Remove(entity);
@@ -52,7 +52,7 @@ namespace QuizApp.Core.Repositories
 
         public void Delete(T entity)
         {
-            //_context.ChangeTracker.Clear();
+            _context.ChangeTracker.Clear();
             _entities.Remove(entity);
         }
     }

@@ -12,7 +12,7 @@ namespace QuizApp.Service.Configurations
             services.AddDbContext<QuizAppDBContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("QuizAppDB"));
-                //options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
 
             return services;
