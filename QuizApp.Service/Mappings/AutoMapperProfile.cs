@@ -23,6 +23,8 @@ namespace QuizApp.Service.Mappings
             CreateMap<ParticipantCreateDto, Participant>().ReverseMap();
             CreateMap<ParticipantResultDto, ParticipantResult>().ReverseMap();
             CreateMap<ParticipantResultCreateDto, ParticipantResult>().ReverseMap();
+            CreateMap<QuizResultsDto, QuizResults>().ReverseMap();
+            CreateMap<QuizResultsCreateDto, QuizResults>().ReverseMap();
 
         }
     }

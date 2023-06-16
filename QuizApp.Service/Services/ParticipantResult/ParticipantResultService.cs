@@ -22,6 +22,16 @@ namespace QuizApp.Service.Services
             {
                 var entity = _mapper.Map<ParticipantResult>(participantResult);
                 await _unitOfWork.ParticipantResultRepository.Add(entity);
+                
+                var resultData = new QuizResultsCreateDto()
+                {
+                    ParticipantId = participantResult.ParticipantId,
+                    QuestionGroupId = participantResult.QuestionGroupId,
+                    ParticipantResultId = entity.Id,
+                };
+                var resultEntity = _mapper.Map<QuizResults>(resultData);
+                await _unitOfWork.ResultRepository.Add(resultEntity);
+
                 var result = await _unitOfWork.SaveChangesAsync();
                 if (result == true)
                 {

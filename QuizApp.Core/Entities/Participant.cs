@@ -6,7 +6,5 @@
         public string UserName { get; set; }
         public int? Score { get; set; }
         public int? TimeTaken { get; set; }
-
-        public virtual IList<ParticipantResult> ParticipantResults { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace QuizApp.Core.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class RefactorDatabase : Migration
+    public partial class UpdateRelationShip : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -27,6 +27,20 @@ namespace QuizApp.Core.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ParticipantResult",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Score = table.Column<int>(type: "int", nullable: true),
+                    TimeTaken = table.Column<int>(type: "int", nullable: true),
+                    IsFinish = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ParticipantResult", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Topic",
                 columns: table => new
                 {
@@ -36,6 +50,26 @@ namespace QuizApp.Core.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Topic", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QuizResults",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ParticipantResultId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ParticipantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    QuestionGroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuizResults", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ParticipantResult_Result",
+                        column: x => x.ParticipantResultId,
+                        principalTable: "ParticipantResult",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -54,38 +88,6 @@ namespace QuizApp.Core.Data.Migrations
                         name: "FK_QuestionGroups_Topic",
                         column: x => x.TopicId,
                         principalTable: "Topic",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ParticipantResult",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Score = table.Column<int>(type: "int", nullable: true),
-                    TimeTaken = table.Column<int>(type: "int", nullable: true),
-                    IsFinish = table.Column<bool>(type: "bit", nullable: false),
-                    ParticipantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    QuestionGroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    QuestionGroupId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ParticipantResult", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ParticipantResult_QuestionGroup_QuestionGroupId1",
-                        column: x => x.QuestionGroupId1,
-                        principalTable: "QuestionGroup",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_ParticipantResults_Participant",
-                        column: x => x.ParticipantId,
-                        principalTable: "Participant",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_ParticipantResults_QuestionGroup",
-                        column: x => x.QuestionGroupId,
-                        principalTable: "QuestionGroup",
                         principalColumn: "Id");
                 });
 
@@ -118,28 +120,12 @@ namespace QuizApp.Core.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Topic",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { new Guid("72c2484b-44b8-4853-a903-d5476ffc69c6"), "Popular" });
+                values: new object[] { new Guid("53852352-75ae-48b2-8b76-b08064c3e34f"), "Popular" });
 
             migrationBuilder.InsertData(
                 table: "QuestionGroup",
                 columns: new[] { "Id", "Name", "TopicId", "TotalQuestion" },
-                values: new object[] { new Guid("db12e9b3-a68f-4b39-99b1-a6892dbb0a5e"), "Graphic Design", new Guid("72c2484b-44b8-4853-a903-d5476ffc69c6"), 0 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ParticipantResult_ParticipantId",
-                table: "ParticipantResult",
-                column: "ParticipantId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ParticipantResult_QuestionGroupId",
-                table: "ParticipantResult",
-                column: "QuestionGroupId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ParticipantResult_QuestionGroupId1",
-                table: "ParticipantResult",
-                column: "QuestionGroupId1");
+                values: new object[] { new Guid("a033f89a-a1fd-48a2-8b9e-ba9258414f09"), "Graphic Design", new Guid("53852352-75ae-48b2-8b76-b08064c3e34f"), 0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Question_QuestionGroupId",
@@ -150,22 +136,31 @@ namespace QuizApp.Core.Data.Migrations
                 name: "IX_QuestionGroup_TopicId",
                 table: "QuestionGroup",
                 column: "TopicId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuizResults_ParticipantResultId",
+                table: "QuizResults",
+                column: "ParticipantResultId",
+                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ParticipantResult");
+                name: "Participant");
 
             migrationBuilder.DropTable(
                 name: "Question");
 
             migrationBuilder.DropTable(
-                name: "Participant");
+                name: "QuizResults");
 
             migrationBuilder.DropTable(
                 name: "QuestionGroup");
+
+            migrationBuilder.DropTable(
+                name: "ParticipantResult");
 
             migrationBuilder.DropTable(
                 name: "Topic");

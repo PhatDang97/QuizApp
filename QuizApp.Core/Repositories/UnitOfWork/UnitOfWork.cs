@@ -10,6 +10,7 @@ namespace QuizApp.Core.Repositories
         private readonly IQuestionRepository _questionRepository;
         private readonly IParticipantRepository _participantRepository;
         private readonly IParticipantResultRepository _participantResultRepository;
+        private readonly IQuizResultsRepository _resultRepository;
 
         public UnitOfWork(QuizAppDBContext context)
         {
@@ -21,6 +22,7 @@ namespace QuizApp.Core.Repositories
         public IQuestionRepository QuestionRepository => _questionRepository ?? new QuestionRepository(_context);
         public IParticipantRepository ParticipantRepository => _participantRepository ?? new ParticipantRepository(_context);
         public IParticipantResultRepository ParticipantResultRepository => _participantResultRepository ?? new ParticipantResultRepository(_context);
+        public IQuizResultsRepository ResultRepository => _resultRepository ?? new QuizResultsRepository(_context);
 
         public void Dispose()
         {
