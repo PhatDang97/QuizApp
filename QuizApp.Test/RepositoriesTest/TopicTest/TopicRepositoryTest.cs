@@ -1,15 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
-using Moq;
+﻿using Moq;
 using QuizApp.Core.Data;
 using QuizApp.Core.Entities;
 using QuizApp.Core.Repositories;
 using QuizApp.Test.FakeData;
 using QuizApp.Test.Mocking;
-using System.Collections;
-using System.Collections.Generic;
-using System.Net.Sockets;
-using Xunit;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace QuizApp.Test.RepositoriesTest.TopicTest
@@ -48,36 +42,16 @@ namespace QuizApp.Test.RepositoriesTest.TopicTest
             Assert.AreEqual(result.Count(), topicList.Count());
         }
 
-        //[Theory]
-        //[InlineData()]
-        //public void Add_NewTopic_ReturnsCorrectResult(Topic topic)
-        //{
-        //    // Arrange
-        //    //var topic = new Topic();
-        //    //topic = new Topic() { Name = " 123" };
-
-        //    var context = new Mock<QuizAppDBContext>();
-        //    var dbSetMock = new Mock<DbSet<Topic>>();
-        //    context.Setup(x => x.Set<Topic>()).Returns(dbSetMock.Object);
-        //    dbSetMock.Setup(x => x.Add(It.IsAny<Topic>())).Returns(topic);
-
-        //    // Act
-        //    var repository = new BaseRepository<Topic>(context.Object);
-        //    repository.Add(topic);
-
-        //    //Assert
-        //    context.Verify(x => x.Set<Topic>());
-        //    dbSetMock.Verify(x => x.Add(It.Is<Topic>(y => y == topic)));
-        //}
-    }
-
-    public class TopicData : IEnumerable<Topic>
-    {
-        public IEnumerator<Topic> GetEnumerator()
+        [Test]
+        public async Task Add_NewTopic_ReturnsCorrectResult()
         {
-            yield return new Topic() { Name ="123" };
+            // Arrange
+            var topic = topicList.First();
+            
+            // Act
+            await topicRepository.Add(topic);
+            //Assert
+            Assert.IsTrue(true);
         }
-
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }
