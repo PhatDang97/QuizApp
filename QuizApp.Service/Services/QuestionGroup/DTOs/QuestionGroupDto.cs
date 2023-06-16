@@ -5,8 +5,8 @@
         public Guid Id { get; set; }
         public string Name { get; set; }
         public Guid TopicId { get; set; }
-        public int Total { get { return Questions.Count(); } }
-        public int TimeExpired { get { return Total * 60; } }
+        public int TotalQuestion { get; set; }
+        public int TimeExpired { get { return TotalQuestion * 60; } }
         Random random = new Random();
         public int Rate { get { return random.Next(1, 5); } }
         public virtual TopicDto Topic { get; set; }

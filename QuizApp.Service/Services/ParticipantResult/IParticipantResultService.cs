@@ -6,5 +6,6 @@ namespace QuizApp.Service.Services
     public interface IParticipantResultService
     {
         Task<ApiResult<IList<ParticipantResultDto>>> GetAll();
+        Task<ApiResult<ParticipantResultDto>> Create(ParticipantResultCreateDto participantResult);
     }
 }

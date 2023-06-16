@@ -38,14 +38,14 @@ namespace QuizApp.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
-        [Route("GetQuestions")]
-        public async Task<IActionResult> GetQuestions()
-        {
-            // QnId = ID, Qn = QuestionName
-            var result = await _questionService.GetAll();
-            return Ok(result);
-        }
+        //[HttpGet]
+        //[Route("GetQuestions")]
+        //public async Task<IActionResult> GetQuestions()
+        //{
+        //    // QnId = ID, Qn = QuestionName
+        //    var result = await _questionService.GetAll();
+        //    return Ok(result);
+        //}
 
         //[HttpPost]
         //[Route("Answers")]

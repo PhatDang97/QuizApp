@@ -7,7 +7,7 @@ namespace QuizApp.Service.Services
     {
         Task<ApiResult<IList<TopicDto>>> GetAll();
         Task<ApiResult<IList<TopicDto>>> GetAllIncludeGroup();
-        Task<ApiResult<bool>> Create(TopicCreateDto dto);
+        Task<ApiResult<TopicDto>> Create(TopicCreateDto dto);
         Task<ApiResult<bool>> DeleteById(Guid id);
     }
 }

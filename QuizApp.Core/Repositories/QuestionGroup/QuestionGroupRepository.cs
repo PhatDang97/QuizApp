@@ -37,5 +37,20 @@ namespace QuizApp.Core.Repositories
         {
             return await _entities.FirstOrDefaultAsync(x => x.Name == name);
         }
+
+        public async Task UpdateTotalQuestion(Guid questionGroupId)
+        {
+            var questionGroup = await _entities.Include(x => x.Questions).FirstOrDefaultAsync(x => x.Id == questionGroupId);
+            if(questionGroup != null)
+            {
+                questionGroup.TotalQuestion = questionGroup.Questions.Count();
+                _entities.Update(questionGroup);
+            }
+        }
+
+        public async Task<QuestionGroup> GetIncludeQuestionById(Guid questionGroupId)
+        {
+            return await _entities.Include(x => x.Questions).FirstOrDefaultAsync(x => x.Id == questionGroupId);
+        }
     }
 }

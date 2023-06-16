@@ -7,5 +7,7 @@ namespace QuizApp.Core.Repositories
     {
         Task<PagedResult<QuestionGroup>> GetQuestionGroupsPaging(GetQuestionGroupPagingRequest request);
         Task<QuestionGroup> GetByName(string name);
+        Task UpdateTotalQuestion(Guid questionGroupId);
+        Task<QuestionGroup> GetIncludeQuestionById(Guid questionGroupId);
     }
 }

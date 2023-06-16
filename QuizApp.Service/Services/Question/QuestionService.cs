@@ -32,28 +32,28 @@ namespace QuizApp.Service.Services
             }
         }
 
-        public async Task<ApiResult<bool>> Create(QuestionCreateDto dto)
+        public async Task<ApiResult<QuestionDto>> Create(QuestionCreateDto dto)
         {
             try
             {
-                //var topicOld = await _unitOfWork.TopicRepository.GetByName(dto.Name);
-                //if (topicOld != null)
-                //{
-                //    return new ApiErrorResult<bool>($"Topic [{dto.Name}] is existing!");
-                //}
                 var entity = _mapper.Map<Question>(dto);
                 await _unitOfWork.QuestionRepository.Add(entity);
-                var result = await _unitOfWork.SaveChangesAsync();
-                if (result == true)
+                if(entity.Id != Guid.Empty)
                 {
-                    return new ApiSuccessResult<bool>($"Create a Question [{dto.Name}] successfully!");
+                    await _unitOfWork.QuestionGroupRepository.UpdateTotalQuestion(entity.QuestionGroupId);
+                    var result = await _unitOfWork.SaveChangesAsync();
+                    if (result == true)
+                    {
+                        var data = _mapper.Map<QuestionDto>(entity);
+                        return new ApiSuccessResult<QuestionDto>(data);
+                    }
                 }
             }
             catch (Exception ex)
             {
-                return new ApiErrorResult<bool>($"Error: {ex.Message}");
+                return new ApiErrorResult<QuestionDto>($"Error: {ex.Message}");
             }
-            return new ApiErrorResult<bool>($"Create a Question [{dto.Name}] failed!");
+            return new ApiErrorResult<QuestionDto>($"Create a Question [{dto.Name}] failed!");
         }
 
         public async Task<ApiResult<bool>> DeleteById(Guid id)
@@ -64,6 +64,7 @@ namespace QuizApp.Service.Services
                 if (topic != null)
                 {
                     _unitOfWork.QuestionRepository.Delete(topic);
+                    await _unitOfWork.QuestionGroupRepository.UpdateTotalQuestion(topic.QuestionGroupId);
                     var result = await _unitOfWork.SaveChangesAsync();
                     if (result == true)
                     {
