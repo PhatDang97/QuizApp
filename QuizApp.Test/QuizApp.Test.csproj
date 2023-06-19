@@ -22,6 +22,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\QuizApp.Core\QuizApp.Core.csproj" />
+    <ProjectReference Include="..\QuizApp.Service\QuizApp.Service.csproj" />
+    <ProjectReference Include="..\QuizApp\QuizApp.csproj" />
   </ItemGroup>
 
 </Project>
